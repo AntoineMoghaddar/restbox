@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "116876833255",
+    "project_id": "restbox-268a1",
+    "storage_bucket": "restbox-268a1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:116876833255:android:5b557f77bed1d7da508d42",
+        "android_client_info": {
+          "package_name": "com.example.restbox"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "116876833255-atmva9p9ld7eknppciljttc3nejo5glk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA-vgIgcx6665nEL3cjOReMHdmaPeRUFWo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "116876833255-atmva9p9ld7eknppciljttc3nejo5glk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
