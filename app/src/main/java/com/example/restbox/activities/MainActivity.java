@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.restbox.R;
+import com.example.restbox.model.RestboxModel;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -30,6 +31,14 @@ public class MainActivity extends AppCompatActivity {
         button.setOnClickListener(v -> {
             Intent i = new Intent(MainActivity.this, EmployeeListActivity.class);
             startActivity(i);
+        });
+
+        button2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                System.out.println("Requesting database of people");
+                RestboxModel.getInstance().getPeopleDatabase();
+            }
         });
 
     }

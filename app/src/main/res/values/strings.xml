@@ -25,4 +25,14 @@
     <string name="stel_manager_in">Stel manager in</string>
     <string name="exporteer_verklaringen">Exporteer verklaringen</string>
     <string name="personeels_lijst">Personeels lijst</string>
+    <string name="name">Name</string>
+    <string name="voorletters_achternaam">Voorletters, Achternaam</string>
+    <string name="textview">TextView</string>
+    <string name="jaar">Jaar</string>
+    <string name="geboortedatum">Geboortedatum</string>
+    <string name="dag">Dag</string>
+    <string name="maand">Maand</string>
+    <string name="functieprofiel">Functieprofiel</string>
+    <string name="persoon_toevoegen">Persoon toevoegen</string>
+    <string name="toevoegen">Toevoegen</string>
 </resources>

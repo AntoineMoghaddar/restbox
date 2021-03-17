@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="functie_array">
+        <item>Medewerker Keuken</item>
+        <item>Medewerker Bediening</item>
+        <item>Bedrijfsleider</item>
+        <item>Assistent Bedrijfsleider</item>
+        <item>Floormanager</item>
+    </string-array>
+</resources>

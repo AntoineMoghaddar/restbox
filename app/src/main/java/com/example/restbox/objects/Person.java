@@ -1,13 +1,16 @@
 package com.example.restbox.objects;
 
 public class Person {
-    private String name, function;
-    private static int id = 0;
+    private String name, function, dateOfBirth;
 
-    public Person(String name, String function) {
+    public Person(String name, String dateOfBirth, String function) {
         this.name = name;
         this.function = function;
-        Person.id++;
+        this.dateOfBirth = dateOfBirth;
+    }
+
+    public String getDateOfBirth() {
+        return dateOfBirth;
     }
 
     public String getName() {
@@ -26,7 +29,5 @@ public class Person {
         this.function = function;
     }
 
-    public int getId() {
-        return id;
-    }
+
 }

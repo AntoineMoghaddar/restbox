@@ -2,12 +2,11 @@ package com.example.restbox.objects;
 
 public class Manager extends Person {
 
-    private final Company company;
+    private Company company;
     private final String phone;
 
-    public Manager(String name, String function, String phone, Company company) {
-        super(name, function);
-        this.company = company;
+    public Manager(String name, String function, String dateOfBirth, String phone) {
+        super(name, dateOfBirth ,function);
         this.phone = phone;
     }
 
