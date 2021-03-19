@@ -26,7 +26,7 @@ public class RestboxModel {
     private ArrayList<Person> people;
     private static RestboxModel instance = null;
 
-    private FirebaseFirestore db;
+    private final FirebaseFirestore db;
 
     //Singleton.
     private RestboxModel() {
@@ -48,10 +48,16 @@ public class RestboxModel {
 
     }
 
+    public void refreshList() {
+        people = new ArrayList<>();
+//        people.clear();
+        getPeopleDatabase();
+    }
+
     public ArrayList<Person> getPeople() {
         return people;
     }
-    
+
     public void getPeopleDatabase() {
         db.collection("people").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
@@ -78,7 +84,6 @@ public class RestboxModel {
                 }
             }
         });
-        getPeople();
     }
 
     public Person newPerson(String name, String dateOfBirth, String function, String tel) {

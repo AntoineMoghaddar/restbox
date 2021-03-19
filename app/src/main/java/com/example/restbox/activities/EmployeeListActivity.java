@@ -19,17 +19,15 @@ import com.example.restbox.R;
 
 public class EmployeeListActivity extends AppCompatActivity {
 
-    private ListView mListView;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_employee_list);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        mListView = (ListView) findViewById(R.id.mList);
+        ListView mListView = findViewById(R.id.mList);
 
         ArrayAdapter<Person> arrayAdapter = new ArrayAdapter<Person>(
                 this,

@@ -32,14 +32,14 @@ public class RegisterPersonActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_person);
 
-        mSpinnerMonths = (Spinner) findViewById(R.id.maand);
-        mSpinnerFunction = (Spinner) findViewById(R.id.functieprofiel);
-        mSpinnerDay = (Spinner) findViewById(R.id.dag);
-        mSpinnerYear = (Spinner) findViewById(R.id.jaar);
-        mAddPerson = (Button) findViewById(R.id.toevoegenbutton);
-        mName = (EditText) findViewById(R.id.Naam);
-        mTel = (EditText) findViewById(R.id.mTel);
-        mTelText = (TextView) findViewById(R.id.textviewTel);
+        mSpinnerMonths = findViewById(R.id.maand);
+        mSpinnerFunction = findViewById(R.id.functieprofiel);
+        mSpinnerDay = findViewById(R.id.dag);
+        mSpinnerYear = findViewById(R.id.jaar);
+        mAddPerson = findViewById(R.id.toevoegenbutton);
+        mName = findViewById(R.id.Naam);
+        mTel = findViewById(R.id.mTel);
+        mTelText = findViewById(R.id.textviewTel);
 
         Integer[] dagen = new Integer[]
                 {
@@ -100,7 +100,6 @@ public class RegisterPersonActivity extends AppCompatActivity {
 
                 Toast toast = Toast.makeText(getApplicationContext(), "Persoon " + mName.getText().toString() + " aangemaakt.", Toast.LENGTH_LONG);
                 toast.show();
-
                 this.finish();
             } else {
                 Toast toast = Toast.makeText(getApplicationContext(), "Vul alle gegevens in.", Toast.LENGTH_LONG);
