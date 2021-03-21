@@ -31,10 +31,5 @@ public class MainActivity extends AppCompatActivity {
             Intent i = new Intent(MainActivity.this, EmployeeListActivity.class);
             startActivity(i);
         });
-
-        button2.setOnClickListener(v -> {
-            RestboxModel.getInstance().refreshList();
-        });
-
     }
 }

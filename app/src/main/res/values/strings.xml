@@ -35,4 +35,10 @@
     <string name="functieprofiel">Functieprofiel</string>
     <string name="persoon_toevoegen">Persoon toevoegen</string>
     <string name="toevoegen">Toevoegen</string>
+    <string name="function">function</string>
+    <string name="addnewperson">AddNewPerson</string>
+    <string name="search">search</string>
+    <string name="more">more</string>
+    <string name="todo">TODO</string>
+    <string name="exporteer">Exporteer</string>
 </resources>

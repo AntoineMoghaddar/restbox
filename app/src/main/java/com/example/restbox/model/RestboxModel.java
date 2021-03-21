@@ -7,14 +7,11 @@ import androidx.annotation.NonNull;
 import com.example.restbox.objects.Employee;
 import com.example.restbox.objects.Manager;
 import com.example.restbox.objects.Person;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,12 +23,15 @@ public class RestboxModel {
     private ArrayList<Person> people;
     private static RestboxModel instance = null;
 
+    private ArrayList<Person> export_queue;
     private final FirebaseFirestore db;
 
     //Singleton.
     private RestboxModel() {
         people = new ArrayList<>();
+        export_queue = new ArrayList<>();
         db = FirebaseFirestore.getInstance();
+        fetchAllUsers();
     }
 
     public static RestboxModel getInstance() {
@@ -48,60 +48,79 @@ public class RestboxModel {
 
     }
 
-    public void refreshList() {
+
+    public boolean enableExport() {
+        return export_queue.size() > 0;
+    }
+
+
+    public void addToExport(Person person) {
+        export_queue.add(person);
+        System.out.println("Size of export_queue " + export_queue.size());
+    }
+
+
+    public void removeFromExport(Person person) {
+        export_queue.remove(person);
+        System.out.println("Size of export_queue " + export_queue.size());
+    }
+
+    private void cleanCache() {
+        people.clear();
         people = new ArrayList<>();
-//        people.clear();
-        getPeopleDatabase();
+        fetchAllUsers();
     }
 
     public ArrayList<Person> getPeople() {
         return people;
     }
 
-    public void getPeopleDatabase() {
-        db.collection("people").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    for (QueryDocumentSnapshot document : task.getResult()) {
-//                        if(document.getData().get())
-//                        Person person = new Person()
-                        if (document.get("function").toString().contains("Bedrijfsleider")) {
-                            people.add(newPerson(
-                                    document.get("name").toString(),
-                                    document.get("dateOfBirth").toString(),
-                                    document.get("function").toString(),
-                                    document.get("phone").toString()));
-                        } else {
-                            people.add(newPerson(
-                                    document.get("name").toString(),
-                                    document.get("dateOfBirth").toString(),
-                                    document.get("function").toString(), ""));
-                        }
+    private Person fetchSpecific(String id) {
+
+        return null;
+    }
+
+    public void fetchAllUsers() {
+        db.collection("people").get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                for (QueryDocumentSnapshot document : task.getResult()) {
+                    if (document.get("function").toString().contains("Bedrijfsleider")) {
+                        people.add(newPerson(
+                                document.getId(),
+                                document.get("name").toString(),
+                                document.get("dateOfBirth").toString(),
+                                document.get("function").toString(),
+                                document.get("phone").toString()));
+                    } else {
+                        people.add(newPerson(
+                                document.getId(),
+                                document.get("name").toString(),
+                                document.get("dateOfBirth").toString(),
+                                document.get("function").toString(), ""));
                     }
-                } else {
-                    Log.w(TAG, "Error getting documents.", task.getException());
                 }
+            } else {
+                Log.w(TAG, "Error getting documents.", task.getException());
             }
         });
     }
 
-    public Person newPerson(String name, String dateOfBirth, String function, String tel) {
+    public Person newPerson(String id, String name, String dateOfBirth, String function, String tel) {
         Person person = null;
         if (function.contains("Bedrijfsleider")) {
-            person = new Manager(name, function, dateOfBirth, tel);
+            person = new Manager(id, name, function, dateOfBirth, tel);
         } else {
-            person = new Employee(name, function, dateOfBirth);
+            person = new Employee(id, name, function, dateOfBirth);
         }
         return person;
     }
 
-    public Person newPerson(String name, int day, String month, int year, String function, String tel) {
-        Person person = null;
+    public Person newPerson(String id, String name, int day, String month, int year, String function, String tel) {
+        Person person;
         if (function.contains("Bedrijfsleider")) {
-            person = new Manager(name, function, formatDate(day, month, year), tel);
+            person = new Manager(id, name, function, formatDate(day, month, year), tel);
         } else {
-            person = new Employee(name, function, formatDate(day, month, year));
+            person = new Employee(id, name, function, formatDate(day, month, year));
         }
         return person;
     }
@@ -119,17 +138,10 @@ public class RestboxModel {
         }
 
         System.out.println("updating firebase");
-        db.collection("people").add(userdata).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-            @Override
-            public void onSuccess(DocumentReference documentReference) {
-                Log.d(TAG, " DocumentSnapshot added with ID: " + documentReference.getId());
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Log.w(TAG, " Error adding document", e);
-            }
-        });
+        db.collection("people").add(userdata).addOnSuccessListener(documentReference -> {
+            cleanCache();
+            Log.d(TAG, " DocumentSnapshot added with ID: " + documentReference.getId());
+        }).addOnFailureListener(e -> Log.w(TAG, " Error adding document", e));
     }
 
 

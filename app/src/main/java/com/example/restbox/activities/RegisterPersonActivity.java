@@ -91,7 +91,7 @@ public class RegisterPersonActivity extends AppCompatActivity {
 
         mAddPerson.setOnClickListener(v -> {
             if (!mName.getText().toString().isEmpty()) {
-                restboxModel.updateFirebase(restboxModel.newPerson(mName.getText().toString(),
+                restboxModel.updateFirebase(restboxModel.newPerson("", mName.getText().toString(),
                         Integer.parseInt(mSpinnerDay.getSelectedItem().toString()),
                         mSpinnerMonths.getSelectedItem().toString(),
                         Integer.parseInt(mSpinnerYear.getSelectedItem().toString()),

@@ -3,7 +3,7 @@ package com.example.restbox.objects;
 public class Person {
     private String name, function, dateOfBirth;
 
-    public Person(String name, String dateOfBirth, String function) {
+    public Person(String id, String name, String dateOfBirth, String function) {
         this.name = name;
         this.function = function;
         this.dateOfBirth = dateOfBirth;

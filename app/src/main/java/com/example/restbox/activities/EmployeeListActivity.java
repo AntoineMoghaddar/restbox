@@ -2,20 +2,19 @@ package com.example.restbox.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ListView;
+import android.widget.Toast;
 
-import com.example.restbox.model.RestboxModel;
-import com.example.restbox.objects.Person;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-
 import com.example.restbox.R;
+import com.example.restbox.adapter.PersonAdapter;
+import com.example.restbox.model.RestboxModel;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class EmployeeListActivity extends AppCompatActivity {
 
@@ -23,23 +22,40 @@ public class EmployeeListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        RestboxModel model = RestboxModel.getInstance();
+
         setContentView(R.layout.activity_employee_list);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         ListView mListView = findViewById(R.id.mList);
+        Button export = findViewById(R.id.button5);
 
-        ArrayAdapter<Person> arrayAdapter = new ArrayAdapter<Person>(
-                this,
-                android.R.layout.simple_list_item_1,
-                RestboxModel.getInstance().getPeople());
+        PersonAdapter adapter = new PersonAdapter(this, RestboxModel.getInstance().getPeople());
+        mListView.setAdapter(adapter);
 
-        mListView.setAdapter(arrayAdapter);
+        /*
+          Version 2.0 Dev
+         */
+//        mListView.setOnItemClickListener((parent, view, position, id) -> {
+//            Intent i = new Intent(EmployeeListActivity.this, PersonDetailActivity.class);
+//            startActivity(i);
+//        });
+
+        export.setOnClickListener(v -> {
+
+            if (model.enableExport()) {
+                export.setEnabled(true);
+
+                Toast toast = Toast.makeText(getApplicationContext(), "Export Enabled", Toast.LENGTH_SHORT);
+                toast.show();
+            } else {
+                Toast toast = Toast.makeText(getApplicationContext(), "Export disabled", Toast.LENGTH_SHORT);
+                toast.show();
+            }
+        });
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(view -> {
-            Snackbar.make(view, "Registering new Employee", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show();
             Intent i = new Intent(EmployeeListActivity.this, RegisterPersonActivity.class);
             startActivity(i);
         });
