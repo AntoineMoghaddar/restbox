@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -17,12 +18,12 @@ import com.example.restbox.model.RestboxModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class EmployeeListActivity extends AppCompatActivity {
+    RestboxModel model = RestboxModel.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        RestboxModel model = RestboxModel.getInstance();
 
         setContentView(R.layout.activity_employee_list);
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -30,11 +31,12 @@ public class EmployeeListActivity extends AppCompatActivity {
         ListView mListView = findViewById(R.id.mList);
         Button export = findViewById(R.id.button5);
 
-        PersonAdapter adapter = new PersonAdapter(this, RestboxModel.getInstance().getPeople());
+        PersonAdapter adapter = new PersonAdapter(this);
         mListView.setAdapter(adapter);
 
         /*
           Version 2.0 Dev
+          TODO detailed activity per employee
          */
 //        mListView.setOnItemClickListener((parent, view, position, id) -> {
 //            Intent i = new Intent(EmployeeListActivity.this, PersonDetailActivity.class);
@@ -42,14 +44,12 @@ public class EmployeeListActivity extends AppCompatActivity {
 //        });
 
         export.setOnClickListener(v -> {
-
             if (model.enableExport()) {
-                export.setEnabled(true);
+                Intent intent = new Intent(EmployeeListActivity.this, addShiftActivity.class);
+                startActivity(intent);
 
-                Toast toast = Toast.makeText(getApplicationContext(), "Export Enabled", Toast.LENGTH_SHORT);
-                toast.show();
             } else {
-                Toast toast = Toast.makeText(getApplicationContext(), "Export disabled", Toast.LENGTH_SHORT);
+                Toast toast = Toast.makeText(getApplicationContext(), "Voeg eerst mensen toe", Toast.LENGTH_SHORT);
                 toast.show();
             }
         });

@@ -41,4 +41,9 @@
     <string name="more">more</string>
     <string name="todo">TODO</string>
     <string name="exporteer">Exporteer</string>
+    <string name="werkdag_datum">Werkdag (Datum)</string>
+    <string name="exporteren">Exporteren</string>
+    <string name="shift_instellingen">Shift instellingen</string>
+    <string name="exporteerlijst">Exporteerlijst</string>
+    <string name="manager">Manager</string>
 </resources>

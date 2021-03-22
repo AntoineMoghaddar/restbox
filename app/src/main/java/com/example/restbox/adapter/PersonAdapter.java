@@ -6,12 +6,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.restbox.R;
+import com.example.restbox.activities.EmployeeListActivity;
 import com.example.restbox.model.RestboxModel;
 import com.example.restbox.objects.Person;
 
@@ -28,7 +31,7 @@ public class PersonAdapter extends BaseAdapter {
     private static LayoutInflater inflater = null;
     private final RestboxModel model = RestboxModel.getInstance();
 
-    public PersonAdapter(Context context, ArrayList<Person> data) {
+    public PersonAdapter(Context context) {
         // TODO Auto-generated constructor stub
         this.context = context;
         inflater = (LayoutInflater) context
@@ -50,7 +53,6 @@ public class PersonAdapter extends BaseAdapter {
         return position;
     }
 
-    @SuppressLint("InflateParams")
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
@@ -77,6 +79,8 @@ public class PersonAdapter extends BaseAdapter {
                 model.removeFromExport(p);
             }
         });
+
+
         return view;
     }
 

@@ -2,14 +2,9 @@ package com.example.restbox.model;
 
 import android.util.Log;
 
-import androidx.annotation.NonNull;
-
 import com.example.restbox.objects.Employee;
 import com.example.restbox.objects.Manager;
 import com.example.restbox.objects.Person;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
@@ -40,19 +35,25 @@ public class RestboxModel {
         return instance;
     }
 
-    public void newCompany() {
+    public ArrayList<Person> getManagers() {
+        ArrayList<Person> managers = new ArrayList<>();
 
+        for (Person p : people) {
+            if (p instanceof Manager) {
+                managers.add(p);
+            }
+        }
+
+        return managers;
     }
 
-    public void newShift() {
-
+    public ArrayList<Person> getQueue() {
+        return export_queue;
     }
-
 
     public boolean enableExport() {
         return export_queue.size() > 0;
     }
-
 
     public void addToExport(Person person) {
         export_queue.add(person);
@@ -103,6 +104,12 @@ public class RestboxModel {
                 Log.w(TAG, "Error getting documents.", task.getException());
             }
         });
+    }
+
+
+    public void emptyQueue() {
+        System.out.println("cleaning cache");
+//       TODO export_queue.clear();
     }
 
     public Person newPerson(String id, String name, String dateOfBirth, String function, String tel) {

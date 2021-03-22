@@ -9,7 +9,8 @@
         android:id="@+id/button5"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:clickable="false"
+        android:background="@color/common_google_signin_btn_text_dark_default"
+        android:clickable="true"
         android:text="@string/exporteer"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/mList" />
