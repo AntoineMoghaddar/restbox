@@ -144,29 +144,10 @@ public class PDFModule {
                 dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
                 currentdate = dateFormat.format(calendar.getTime());
                 field.setValue(currentdate);
-//
-//
-//                DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-//                LocalDateTime now = LocalDateTime.now();
-//                field.setValue(dtf.format(now));
                 break;
             default:
                 System.out.println("No case found for this item.");
                 break;
         }
     }
-
-//    public void setVals(PDCheckbox field, String val, Person person, Manager manager, String date) throws IOException {
-//        switch (val) {
-//            case "010":
-//                field.setValue("Geef zo precies mogelijk aan op welke dag(en) en tijdstip(pen) uw werknemer buiten moet zijn:");
-//                break;
-//            case "015":
-//                field.setValue("Ja");
-//                break;
-//            default:
-//                System.out.println("No case found for this item.");
-//                break;
-//        }
-//    }
 }
