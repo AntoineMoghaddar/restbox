@@ -95,4 +95,11 @@ public class addShiftActivity extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        model.emptyQueue();
+        this.finish();
+    }
 }

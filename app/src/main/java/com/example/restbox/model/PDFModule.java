@@ -2,7 +2,6 @@ package com.example.restbox.model;
 
 import android.content.Context;
 import android.os.Environment;
-import android.widget.RadioButton;
 import android.widget.Toast;
 
 import com.example.restbox.objects.Manager;
@@ -15,7 +14,6 @@ import com.tom_roush.pdfbox.pdmodel.interactive.form.PDTextField;
 import com.tom_roush.pdfbox.util.PDFBoxResourceLoader;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -49,12 +47,10 @@ public class PDFModule {
     }
 
     public boolean fillPDF(Manager manager, String date) {
+        boolean emtpy = false;
         for (Person s : model.getQueue()) {
             try {
-//                new File("./werkgever.pdf")
-//                PDDocument pDDocument = PDDocument.load(new FileInputStream("werkgever.pdf"));
                 PDDocument pDDocument = PDDocument.load(context.getAssets().open("werkgever.pdf"));
-
 
                 PDAcroForm pDAcroForm = pDDocument.getDocumentCatalog().getAcroForm();
                 for (String value : fields) {
@@ -81,21 +77,20 @@ public class PDFModule {
                     Toast toast = Toast.makeText(context, "Documenten opgeslagen", Toast.LENGTH_LONG);
                     toast.show();
                 } catch (IOException e) {
+                    emtpy = false;
                     e.printStackTrace();
                 }
-
-//                String path = root.getAbsolutePath() + "/Download/";
-//                pDDocument.save(new File(path + date + "_" + s.getName() + ".pdf"));
-//                pDDocument.close();
-
-
-                model.emptyQueue();
-                return true;
+                emtpy = true;
             } catch (IOException e) {
+                emtpy = false;
                 e.printStackTrace();
             }
         }
-        return false;
+
+        if (emtpy)
+            model.emptyQueue();
+
+        return emtpy;
     }
 
     public void setVals(PDTextField field, String val, Person person, Manager manager, String date) throws IOException {

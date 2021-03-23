@@ -15,7 +15,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Restbox">
-        <activity android:name=".activities.juridischeInformatio"></activity>
+        <activity android:name=".activities.juridischeInformatio" />
         <activity android:name=".activities.PermissionReqActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
