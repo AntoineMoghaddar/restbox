@@ -46,9 +46,9 @@ public class addShiftActivity extends AppCompatActivity {
                         21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31
                 };
 
-        int eindjaar = 2010;
-        Integer[] jaren = new Integer[50];
-        for (int i = 0; eindjaar > 1960; i++) {
+        int eindjaar = 2021;
+        Integer[] jaren = new Integer[10];
+        for (int i = 0; eindjaar > 2011; i++) {
             jaren[i] = eindjaar;
             eindjaar--;
         }
