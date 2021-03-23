@@ -1,29 +1,38 @@
 package com.example.restbox.model;
 
 import android.content.Context;
+import android.os.Environment;
+import android.widget.RadioButton;
+import android.widget.Toast;
 
 import com.example.restbox.objects.Manager;
 import com.example.restbox.objects.Person;
 import com.tom_roush.pdfbox.pdmodel.PDDocument;
 import com.tom_roush.pdfbox.pdmodel.interactive.form.PDAcroForm;
+import com.tom_roush.pdfbox.pdmodel.interactive.form.PDCheckbox;
+import com.tom_roush.pdfbox.pdmodel.interactive.form.PDRadioButton;
 import com.tom_roush.pdfbox.pdmodel.interactive.form.PDTextField;
 import com.tom_roush.pdfbox.util.PDFBoxResourceLoader;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 public class PDFModule {
 
     File root;
+    Context context;
 
     private RestboxModel model;
     String[] fields;
 
     public PDFModule(Context applicationContext) {
         initPDFFiller(applicationContext);
+        context = applicationContext;
     }
 
     public void initPDFFiller(Context applicationContext) {
@@ -43,16 +52,41 @@ public class PDFModule {
         for (Person s : model.getQueue()) {
             try {
 //                new File("./werkgever.pdf")
-                PDDocument pDDocument = PDDocument.load(new FileInputStream("app/werkgever.pdf"));
+//                PDDocument pDDocument = PDDocument.load(new FileInputStream("werkgever.pdf"));
+                PDDocument pDDocument = PDDocument.load(context.getAssets().open("werkgever.pdf"));
+
+
                 PDAcroForm pDAcroForm = pDDocument.getDocumentCatalog().getAcroForm();
                 for (String value : fields) {
-                    PDTextField field = (PDTextField) pDAcroForm.getField(value);
-                    setVals(field, value, s, manager, date);
+                    System.out.println(value);
+                    if (value.equals("010")) {
+                        PDRadioButton rd = (PDRadioButton) pDAcroForm.getField(value);
+                        rd.setValue("Geef zo precies mogelijk aan op welke dag(en) en tijdstip(pen) uw werknemer buiten moet zijn:");
+                    } else if (value.equals("015")) {
+                        PDCheckbox rd = (PDCheckbox) pDAcroForm.getField(value);
+                        rd.setValue("Ja");
+                    } else {
+                        PDTextField field = (PDTextField) pDAcroForm.getField(value);
+                        setVals(field, value, s, manager, date);
+                    }
                 }
                 pDDocument.getCurrentAccessPermission().setReadOnly();
-                String path = root.getAbsolutePath() + "/Download/";
-                pDDocument.save(new File(path + s.getName() + ".pdf"));
-                pDDocument.close();
+                File outputFile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString(), date + "_" + s.getName() + ".pdf");
+                try {
+                    outputFile.createNewFile();
+                    OutputStream out = new FileOutputStream(outputFile);
+                    pDDocument.save(out);
+                    pDDocument.close();
+                    out.close();
+                    Toast toast = Toast.makeText(context, "Documenten opgeslagen", Toast.LENGTH_LONG);
+                    toast.show();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+//                String path = root.getAbsolutePath() + "/Download/";
+//                pDDocument.save(new File(path + date + "_" + s.getName() + ".pdf"));
+//                pDDocument.close();
 
 
                 model.emptyQueue();
@@ -126,4 +160,18 @@ public class PDFModule {
                 break;
         }
     }
+
+//    public void setVals(PDCheckbox field, String val, Person person, Manager manager, String date) throws IOException {
+//        switch (val) {
+//            case "010":
+//                field.setValue("Geef zo precies mogelijk aan op welke dag(en) en tijdstip(pen) uw werknemer buiten moet zijn:");
+//                break;
+//            case "015":
+//                field.setValue("Ja");
+//                break;
+//            default:
+//                System.out.println("No case found for this item.");
+//                break;
+//        }
+//    }
 }

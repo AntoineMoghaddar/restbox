@@ -1,7 +1,5 @@
 package com.example.restbox.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -10,14 +8,14 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.restbox.R;
-import com.example.restbox.adapter.PersonAdapter;
 import com.example.restbox.adapter.ShiftAdapter;
 import com.example.restbox.model.PDFModule;
 import com.example.restbox.model.RestboxModel;
 import com.example.restbox.objects.Manager;
 import com.example.restbox.objects.Person;
-import com.example.restbox.objects.Shift;
 
 import java.util.ArrayList;
 
@@ -78,26 +76,24 @@ public class addShiftActivity extends AppCompatActivity {
         mSpinnerMonths.setAdapter(adapterMaanden);
         mSpinnerDay.setAdapter(adapterDag);
 
-        mExportButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                PDFModule p = new PDFModule(getApplicationContext());
-                String dateformatting = "" + mSpinnerDay.getSelectedItem().toString() + "/"
-                        + mSpinnerMonths.getSelectedItem().toString() + "/"
-                        + mSpinnerYear.getSelectedItem().toString();
+        mExportButton.setOnClickListener(v -> {
+            PDFModule p = new PDFModule(getApplicationContext());
+            String dateformatting = "" + mSpinnerDay.getSelectedItem().toString() + "-"
+                    + mSpinnerMonths.getSelectedItem().toString() + "-"
+                    + mSpinnerYear.getSelectedItem().toString();
 
-                for (Person t : managers) {
-                    if (mSpinnerManager.getSelectedItem().toString().equals(t.getName())) {
-                        if (p.fillPDF((Manager) t, dateformatting)) {
-                            Toast toast = Toast.makeText(getApplicationContext(), "Documenten opgeslagen", Toast.LENGTH_LONG);
-                            toast.show();
+            if (managers.size() > 0) {
+                for (Person q : managers) {
+                    if (mSpinnerManager.getSelectedItem().toString().equals(q.getName())) {
+                        if (p.fillPDF((Manager) q, dateformatting)) {
                             finish();
                         }
                     }
                 }
-
+            } else {
+                Toast toast = Toast.makeText(getApplicationContext(), "Voeg managers toe.", Toast.LENGTH_LONG);
+                toast.show();
             }
         });
-
     }
 }

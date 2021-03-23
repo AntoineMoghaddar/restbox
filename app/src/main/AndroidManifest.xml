@@ -3,6 +3,10 @@
     package="com.example.restbox">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.MEDIA_CONTENT_CONTROL" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
 
     <application
         android:icon="@mipmap/ic_launcher"
@@ -11,19 +15,21 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Restbox">
-        <activity android:name=".activities.addShiftActivity" />
-        <activity android:name=".activities.RegisterPersonActivity" />
-        <activity
-            android:name=".activities.EmployeeListActivity"
-            android:label="@string/title_activity_employee_list"
-            android:theme="@style/Theme.Restbox.NoActionBar" />
-        <activity android:name=".activities.MainActivity">
+        <activity android:name=".activities.juridischeInformatio"></activity>
+        <activity android:name=".activities.PermissionReqActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".activities.addShiftActivity" />
+        <activity android:name=".activities.RegisterPersonActivity" />
+        <activity
+            android:name=".activities.EmployeeListActivity"
+            android:label="@string/title_activity_employee_list"
+            android:theme="@style/Theme.Restbox.NoActionBar" />
+        <activity android:name=".activities.MainActivity" />
     </application>
 
 </manifest>
