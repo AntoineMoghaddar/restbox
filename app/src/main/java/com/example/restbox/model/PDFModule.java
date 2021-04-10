@@ -27,6 +27,7 @@ public class PDFModule {
 
     private RestboxModel model;
     String[] fields;
+    private static int i = 1;
 
     public PDFModule(Context applicationContext) {
         initPDFFiller(applicationContext);
@@ -69,21 +70,31 @@ public class PDFModule {
                 pDDocument.getCurrentAccessPermission().setReadOnly();
                 File outputFile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString(), date + "_" + s.getName() + ".pdf");
                 try {
-                    outputFile.createNewFile();
-                    OutputStream out = new FileOutputStream(outputFile);
+                    OutputStream out;
+                    if (outputFile.createNewFile()) {
+                        out = new FileOutputStream(outputFile);
+                    } else {
+                        outputFile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString(), date + "_" + s.getName() + "(" + i + ")" + ".pdf");
+                        i++;
+                        out = new FileOutputStream(outputFile);
+                    }
+
                     pDDocument.save(out);
                     pDDocument.close();
                     out.close();
                     Toast toast = Toast.makeText(context, "Documenten opgeslagen", Toast.LENGTH_LONG);
                     toast.show();
+
                 } catch (IOException e) {
-                    emtpy = false;
-                    e.printStackTrace();
+                    emtpy = true;
+                    Toast toast = Toast.makeText(context, "Error, document niet opgeslagen.", Toast.LENGTH_LONG);
+                    toast.show();
                 }
                 emtpy = true;
             } catch (IOException e) {
-                emtpy = false;
-                e.printStackTrace();
+                emtpy = true;
+                Toast toast = Toast.makeText(context, "Error, document niet opgeslagen.", Toast.LENGTH_LONG);
+                toast.show();
             }
         }
 
